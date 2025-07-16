@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Malla Curricular Interactiva</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            color: #fff;
+            background: url('https://usm.cl/wp-content/uploads/2021/03/informatica.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            backdrop-filter: blur(4px);
+        }
+
+        header {
+            background: rgba(0, 51, 102, 0.85);
+            padding: 20px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        #filtroBtn {
+            margin: 15px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007ACC;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row-reverse;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .semestre {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 15px;
+            min-width: 250px;
+            flex-shrink: 0;
+        }
+
+        .semestre h2 {
+            text-align: center;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        .ramo {
+            background: rgba(255, 255, 255, 0.9);
+            color: #222;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .ramo:hover {
+            transform: scale(1.03);
+        }
+
+        .ramo.tachado {
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+
+        .ramo.bloqueado {
+            background-color: #bbb !important;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .descripcion {
+            font-size: 14px;
+            padding: 5px 10px;
+            display: none;
+            color: #eee;
+        }
+
+        .prerequisito {
+            display: block;
+            font-size: 12px;
+            color: #555;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                font-size: 22px;
+            }
+
+            .container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        Malla Curricular Interactiva - Ingeniería Civil informatica
+    </header>
+
+    <div class="container" id="malla">
+
+        <div class="semestre">
+            <h2>6° Semestre</h2>
+
+            <div class="ramo" data-id="INF-321" data-prerequisitos="INF-222" onclick="toggleDescripcion('INF-321')"
+                ondblclick="marcarPasado(this, 'INF-321')">
+                INF-321 - Computación Numérica
+                <span class="prerequisito">(Requiere: Ecuaciones Diferenciales)</span>
+            </div>
+            <div class="descripcion" id="INF-321">Solución numérica de ecuaciones, errores, interpolación.</div>
+
+            <div class="ramo" data-id="INF-322" data-prerequisitos="INF-312" onclick="toggleDescripcion('INF-322')"
+                ondblclick="marcarPasado(this, 'INF-322')">
+                INF-322 - Investigación de Operaciones
+                <span class="prerequisito">(Requiere: Inferencia Estadística)</span>
+            </div>
+            <div class="descripcion" id="INF-322">Modelos lineales, transporte, programación entera.</div>
+
+            <div class="ramo" data-id="INF-323" data-prerequisitos="INF-224" onclick="toggleDescripcion('INF-323')"
+                ondblclick="marcarPasado(this, 'INF-323')">
+                INF-323 - Teoría de la Computación
+                <span class="prerequisito">(Requiere: Lógica para Ciencias de la Computación)</span>
+            </div>
+            <div class="descripcion" id="INF-323">Autómatas, gramáticas, lenguajes, computabilidad.</div>
+
+            <div class="ramo" data-id="INF-324" data-prerequisitos="INF-314" onclick="toggleDescripcion('INF-324')"
+                ondblclick="marcarPasado(this, 'INF-324')">
+                INF-324 - Base de Datos
+                <span class="prerequisito">(Requiere: Modelamiento de Datos)</span>
+            </div>
+            <div class="descripcion" id="INF-324">SQL, normalización, administración y seguridad.</div>
+
+            <div class="ramo" data-id="INF-325" data-prerequisitos="INF-225,INF-315"
+                onclick="toggleDescripcion('INF-325')" ondblclick="marcarPasado(this, 'INF-325')">
+                INF-325 - Sistemas Operativos
+                <span class="prerequisito">(Requiere: Arquitectura de Computadores y Taller de Circuitos)</span>
+            </div>
+            <div class="descripcion" id="INF-325">Procesos, planificación, memoria y sistemas de archivos.</div>
+
+            <div class="ramo" data-id="MFG-216" data-prerequisitos="MFG-114" onclick="toggleDescripcion('MFG-216')"
+                ondblclick="marcarPasado(this, 'MFG-216')">
+                MFG-216 - Ética Cristiana
+                <span class="prerequisito">(Requiere: Introducción a la Fe)</span>
+            </div>
+            <div class="descripcion" id="MFG-216">Ética profesional desde una perspectiva cristiana.</div>
+        </div>
+
+
+        <div class="semestre">
+            <h2>5° Semestre</h2>
+
+            <div class="ramo" data-id="INF-311" data-prerequisitos="INF-221" onclick="toggleDescripcion('INF-311')"
+                ondblclick="marcarPasado(this, 'INF-311')">
+                INF-311 - Física III
+                <span class="prerequisito">(Requiere: Física II)</span>
+            </div>
+            <div class="descripcion" id="INF-311">Ondas, óptica y principios modernos.</div>
+
+            <div class="ramo" data-id="INF-312" data-prerequisitos="INF-122" onclick="toggleDescripcion('INF-312')"
+                ondblclick="marcarPasado(this, 'INF-312')">
+                INF-312 - Inferencia Estadística
+                <span class="prerequisito">(Requiere: Cálculo II)</span>
+            </div>
+            <div class="descripcion" id="INF-312">Probabilidades, estimación, prueba de hipótesis.</div>
+
+            <div class="ramo" data-id="INF-313" data-prerequisitos="INF-223" onclick="toggleDescripcion('INF-313')"
+                ondblclick="marcarPasado(this, 'INF-313')">
+                INF-313 - Estructuras Discretas
+                <span class="prerequisito">(Requiere: Programación Avanzada)</span>
+            </div>
+            <div class="descripcion" id="INF-313">Grafos, conjuntos, relaciones y conteo.</div>
+
+            <div class="ramo" data-id="INF-314" data-prerequisitos="INF-223" onclick="toggleDescripcion('INF-314')"
+                ondblclick="marcarPasado(this, 'INF-314')">
+                INF-314 - Modelamiento de Datos
+                <span class="prerequisito">(Requiere: Programación Avanzada)</span>
+            </div>
+            <div class="descripcion" id="INF-314">Modelado relacional, diseño conceptual y lógico.</div>
+
+            <div class="ramo" data-id="INF-315" data-prerequisitos="INF-225" onclick="toggleDescripcion('INF-315')"
+                ondblclick="marcarPasado(this, 'INF-315')">
+                INF-315 - Taller de Circuitos Digitales
+                <span class="prerequisito">(Requiere: Arquitectura de Computadores)</span>
+            </div>
+            <div class="descripcion" id="INF-315">Simulación, diseño y armado de circuitos digitales.</div>
+
+            <div class="ramo" data-id="MFG-114" onclick="toggleDescripcion('MFG-114')"
+                ondblclick="marcarPasado(this, 'MFG-114')">
+                MFG-114 - Introducción a la Fe
+            </div>
+            <div class="descripcion" id="MFG-114">Reflexión sobre espiritualidad y fundamentos cristianos.</div>
+        </div>
+
+
+        <div class="semestre">
+            <h2>4° Semestre</h2>
+
+            <div class="ramo" data-id="INF-221" data-prerequisitos="INF-211" onclick="toggleDescripcion('INF-221')"
+                ondblclick="marcarPasado(this, 'INF-221')">
+                INF-221 - Física II
+                <span class="prerequisito">(Requiere: Física I)</span>
+            </div>
+            <div class="descripcion" id="INF-221">Electricidad, magnetismo y ondas.</div>
+
+            <div class="ramo" data-id="INF-222" data-prerequisitos="INF-212" onclick="toggleDescripcion('INF-222')"
+                ondblclick="marcarPasado(this, 'INF-222')">
+                INF-222 - Ecuaciones Diferenciales
+                <span class="prerequisito">(Requiere: Cálculo III)</span>
+            </div>
+            <div class="descripcion" id="INF-222">EDO, aplicaciones y métodos numéricos básicos.</div>
+
+            <div class="ramo" data-id="INF-223" data-prerequisitos="INF-213" onclick="toggleDescripcion('INF-223')"
+                ondblclick="marcarPasado(this, 'INF-223')">
+                INF-223 - Programación Avanzada
+                <span class="prerequisito">(Requiere: Estructuras de Datos)</span>
+            </div>
+            <div class="descripcion" id="INF-223">POO, recursividad, manejo de memoria.</div>
+
+            <div class="ramo" data-id="INF-224" data-prerequisitos="INF-111" onclick="toggleDescripcion('INF-224')"
+                ondblclick="marcarPasado(this, 'INF-224')">
+                INF-224 - Lógica para Ciencias de la Computación
+                <span class="prerequisito">(Requiere: Álgebra I)</span>
+            </div>
+            <div class="descripcion" id="INF-224">Lógica proposicional, lógica de predicados, demostraciones.</div>
+
+            <div class="ramo" data-id="INF-225" data-prerequisitos="INF-215" onclick="toggleDescripcion('INF-225')"
+                ondblclick="marcarPasado(this, 'INF-225')">
+                INF-225 - Arquitectura de Computadores
+                <span class="prerequisito">(Requiere: Circuitos Digitales)</span>
+            </div>
+            <div class="descripcion" id="INF-225">Procesadores, buses, memoria, ensamblador.</div>
+
+            <div class="ramo" data-id="INF-226"
+                data-prerequisitos="INF-111,INF-112,INF-113,INF-114,IFG-100,INF-121,INF-122,INF-123,INF-124,IFG-200,INF-211,INF-212,INF-213,INF-214,INF-215,IFG-300"
+                onclick="toggleDescripcion('INF-226')" ondblclick="marcarPasado(this, 'INF-226')">
+                INF-226 - Módulo Integrador de Ciencias Básicas
+                <span class="prerequisito">(Requiere todos los ramos hasta semestre 3)</span>
+            </div>
+            <div class="descripcion" id="INF-226">Proyecto integrador que aplica conocimientos básicos.</div>
+        </div>
+
+
+        <div class="semestre">
+            <h2>3° Semestre</h2>
+
+            <div class="ramo" data-id="INF-211" onclick="toggleDescripcion('INF-211')"
+                ondblclick="marcarPasado(this, 'INF-211')">
+                INF-211 - Física I
+            </div>
+            <div class="descripcion" id="INF-211">Física básica: cinemática, dinámica y leyes fundamentales.</div>
+
+            <div class="ramo" data-id="INF-212" data-prerequisitos="INF-122,INF-121"
+                onclick="toggleDescripcion('INF-212')" ondblclick="marcarPasado(this, 'INF-212')">
+                INF-212 - Cálculo III
+                <span class="prerequisito">(Requiere: Cálculo II y Álgebra II)</span>
+            </div>
+            <div class="descripcion" id="INF-212">Cálculo multivariable y aplicaciones vectoriales.</div>
+
+            <div class="ramo" data-id="INF-213" data-prerequisitos="INF-123" onclick="toggleDescripcion('INF-213')"
+                ondblclick="marcarPasado(this, 'INF-213')">
+                INF-213 - Estructuras de Datos
+                <span class="prerequisito">(Requiere: Programación)</span>
+            </div>
+            <div class="descripcion" id="INF-213">Listas, pilas, colas, árboles, grafos.</div>
+
+            <div class="ramo" data-id="INF-214" data-prerequisitos="INF-124" onclick="toggleDescripcion('INF-214')"
+                ondblclick="marcarPasado(this, 'INF-214')">
+                INF-214 - Expresión Oral en Ingeniería
+                <span class="prerequisito">(Requiere: Comprensión lectora y producción de textos)</span>
+            </div>
+            <div class="descripcion" id="INF-214">Técnicas de exposición, comunicación efectiva, lenguaje técnico.</div>
+
+            <div class="ramo" data-id="INF-215" data-prerequisitos="INF-111" onclick="toggleDescripcion('INF-215')"
+                ondblclick="marcarPasado(this, 'INF-215')">
+                INF-215 - Circuitos Digitales
+                <span class="prerequisito">(Requiere: Álgebra I)</span>
+            </div>
+            <div class="descripcion" id="INF-215">Lógica digital, compuertas, codificadores, flip-flops, registros.
+            </div>
+
+            <div class="ramo" data-id="IFG-300" data-prerequisitos="IFG-200" onclick="toggleDescripcion('IFG-300')"
+                ondblclick="marcarPasado(this, 'IFG-300')">
+                IFG-300 - Inglés III
+                <span class="prerequisito">(Requiere: Inglés II)</span>
+            </div>
+            <div class="descripcion" id="IFG-300">Inglés avanzado aplicado a la ingeniería.</div>
+        </div>
+
+
+        <div class="semestre">
+            <h2>2° Semestre</h2>
+            <div class="ramo" data-id="INF-121" data-prerequisitos="INF-111" onclick="toggleDescripcion('INF-121')"
+                ondblclick="marcarPasado(this, 'INF-121')">
+                INF-121 - Álgebra II
+                <span class="prerequisito">(Requiere: Álgebra I)</span>
+            </div>
+            <div class="descripcion" id="INF-121">Álgebra lineal avanzada.</div>
+
+            <div class="ramo" data-id="INF-122" data-prerequisitos="INF-112" onclick="toggleDescripcion('INF-122')"
+                ondblclick="marcarPasado(this, 'INF-122')">
+                INF-122 - Cálculo II
+                <span class="prerequisito">(Requiere: Cálculo I)</span>
+            </div>
+            <div class="descripcion" id="INF-122">Integrales y aplicaciones.</div>
+
+            <div class="ramo" data-id="INF-123" data-prerequisitos="INF-113" onclick="toggleDescripcion('INF-123')"
+                ondblclick="marcarPasado(this, 'INF-123')">
+                INF-123 - Programación
+                <span class="prerequisito">(Requiere: Introducción a la Computación)</span>
+            </div>
+            <div class="descripcion" id="INF-123">Estructuras de control, funciones, lógica de programación.</div>
+
+            <div class="ramo" data-id="INF-124" onclick="toggleDescripcion('INF-124')"
+                ondblclick="marcarPasado(this, 'INF-124')">
+                INF-124 - Comprensión lectora y producción de textos
+            </div>
+            <div class="descripcion" id="INF-124">Técnicas de lectura y redacción académica.</div>
+
+            <div class="ramo" data-id="IFG-200" data-prerequisitos="IFG-100" onclick="toggleDescripcion('IFG-200')"
+                ondblclick="marcarPasado(this, 'IFG-200')">
+                IFG-200 - Inglés II
+                <span class="prerequisito">(Requiere: Inglés I)</span>
+            </div>
+            <div class="descripcion" id="IFG-200">Inglés intermedio: comunicación oral y escrita.</div>
+        </div>
+
+        <div class="semestre">
+            <h2>1° Semestre</h2>
+            <div class="ramo" data-id="INF-111" onclick="toggleDescripcion('INF-111')"
+                ondblclick="marcarPasado(this, 'INF-111')">
+                INF-111 - Álgebra I
+            </div>
+            <div class="descripcion" id="INF-111">Fundamentos de álgebra y operaciones básicas.</div>
+
+            <div class="ramo" data-id="INF-112" onclick="toggleDescripcion('INF-112')"
+                ondblclick="marcarPasado(this, 'INF-112')">
+                INF-112 - Cálculo I
+            </div>
+            <div class="descripcion" id="INF-112">Límites, derivadas y aplicaciones básicas.</div>
+
+            <div class="ramo" data-id="INF-113" onclick="toggleDescripcion('INF-113')"
+                ondblclick="marcarPasado(this, 'INF-113')">
+                INF-113 - Introducción a la Computación
+            </div>
+            <div class="descripcion" id="INF-113">Historia y fundamentos de la computación.</div>
+
+            <div class="ramo" data-id="INF-114" onclick="toggleDescripcion('INF-114')"
+                ondblclick="marcarPasado(this, 'INF-114')">
+                INF-114 - Introducción a la Ingeniería
+            </div>
+            <div class="descripcion" id="INF-114">Rol del ingeniero, ética y contexto profesional.</div>
+
+            <div class="ramo" data-id="IFG-100" onclick="toggleDescripcion('IFG-100')"
+                ondblclick="marcarPasado(this, 'IFG-100')">
+                IFG-100 - Inglés I
+            </div>
+            <div class="descripcion" id="IFG-100">Inglés básico para contextos académicos.</div>
+        </div>
+
+
+        <script>
+            const aprobados = JSON.parse(localStorage.getItem('aprobados') || '[]');
+            const malla = document.getElementById('malla');
+
+            function toggleDescripcion(id) {
+                const desc = document.getElementById(id);
+                if (desc) {
+                    desc.style.display = desc.style.display === 'block' ? 'none' : 'block';
+                }
+            }
+
+            function marcarPasado(elem, id) {
+                if (elem.classList.contains('tachado')) {
+                    elem.classList.remove('tachado');
+                    aprobados.splice(aprobados.indexOf(id), 1);
+                } else {
+                    elem.classList.add('tachado');
+                    aprobados.push(id);
+                }
+                localStorage.setItem('aprobados', JSON.stringify(aprobados));
+                actualizarEstado();
+            }
+
+            function actualizarEstado() {
+                document.querySelectorAll('.ramo').forEach(ramo => {
+                    const id = ramo.dataset.id;
+                    const prereqs = (ramo.dataset.prerequisitos || '').split(',').filter(Boolean);
+                    const cumplido = prereqs.every(pr => aprobados.includes(pr));
+                    if (prereqs.length > 0 && !cumplido) {
+                        ramo.classList.add('bloqueado');
+                    } else {
+                        ramo.classList.remove('bloqueado');
+                    }
+
+                    if (aprobados.includes(id)) {
+                        ramo.classList.add('tachado');
+                    } else {
+                        ramo.classList.remove('tachado');
+                    }
+                });
+            }
+
+            actualizarEstado();
+        </script>
+</body>
+
+</html>
